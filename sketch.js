@@ -1,53 +1,46 @@
-var path, pathImage
-var jaxxon, jaxxonRuns
-var invisibleWall
-var invisibleWallR
+var ship, ship_images;
+var sea, sea_image;
+
 function preload(){
-  //pre-load images
-    jaxxonRuns = loadAnimation("Runner-1.png", "Runner-2.png")
-    pathImage = loadImage("path.png")
+  sea_image = loadImage("sea.png");
+  ship_images = loadAnimation("ship-1.png", "ship-2.png", "ship-3.png", "ship-4.png");
+
 }
 
 function setup(){
-  createCanvas(400,600);
-  //create sprites here
-  jaxxon = createSprite(200,500,10,30)
-  jaxxon.addAnimation("running", jaxxonRuns)
-  jaxxon.scale = 0.04
-
-  path = createSprite(200,200)
-  path.addImage("track", pathImage)
-  path.velocityY = 4
-  path.scale = 1.2
-  path.height = 1007
-  //path.y = 200
-  jaxxon.depth = path.depth + 1 
-  console.log(path.height + ' ' + path.y)
+  createCanvas(600, 400);
  
-  invisibleWall = createSprite(0,300,50,600)
-  invisibleWall.visible = false
   
-  invisibleWallR = createSprite(400,300,50,600)
-  invisibleWallR.visible = false
  
+    ship = createSprite(50,250,20,50);
+    ship.addAnimation("image", ship_images);
+    ship.scale = 0.1;
+
+    //ship.velocityX = 2
+
+
+    sea = createSprite(10,180,2084,20);
+    sea.addImage("waves", sea_image)
+    console.log(sea.width)  
+    sea.scale = 0.5
+
+    
+    sea.velocityX = -2
+    sea.x = sea.width / 4
+    sea.depth = ship.depth-1
 }
 
 function draw() {
-background(0)
- console.log(path.height + ' ' + path.y)
-if(path.y > path.height / 2) {
-  path.y = 200
-}
+  //background("blue")
 
-if(keyDown(RIGHT_ARROW)){
-  jaxxon.x = jaxxon.x+2
-}
+  if (sea.x < -sea.width / 5) {
+    sea.x = sea.width / 4
+  }
+  
+  console.log(sea.width + ' ' +sea.x)
 
-if(keyDown(LEFT_ARROW)){
-  jaxxon.x = jaxxon.x-2
-}
-jaxxon.collide(invisibleWallR)
-jaxxon.collide(invisibleWall)
+
   drawSprites();
 
 }
+
